@@ -1,0 +1,279 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Portfolio</title>
+        <script
+            src="https://code.jquery.com/jquery-3.7.1.js"
+            integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
+            crossorigin="anonymous"
+        ></script>
+        <script
+            src="https://code.jquery.com/ui/1.13.3/jquery-ui.js"
+            integrity="sha256-J8ay84czFazJ9wcTuSDLpPmwpMXOm573OUtZHPQqpEU="
+            crossorigin="anonymous"
+        ></script>
+
+        <link
+            rel="stylesheet"
+            href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
+        />
+
+        <style>
+            @keyframes scroll {
+                0% {
+                    top: -10px;
+                }
+                100% {
+                    top: 0px;
+                }
+            }
+            .crt::after {
+                content: " ";
+                display: block;
+                position: absolute;
+                top: 0;
+                left: 0;
+                bottom: 0;
+                right: 0;
+                background: rgba(18, 16, 16, 0.1);
+                opacity: 0;
+                z-index: 2;
+                pointer-events: none;
+            }
+            .crt::before {
+                content: " ";
+                display: block;
+                position: absolute;
+                top: 0;
+                left: 0;
+                bottom: 0;
+                right: 0;
+                background: linear-gradient(
+                        rgba(18, 16, 16, 0) 50%,
+                        rgba(0, 0, 0, 0.25) 50%
+                    ),
+                    linear-gradient(
+                        90deg,
+                        rgba(255, 0, 0, 0.06),
+                        rgba(0, 255, 0, 0.02),
+                        rgba(0, 0, 255, 0.06)
+                    );
+                z-index: 2;
+                background-size:
+                    200% 2px,
+                    3px 200%;
+                pointer-events: none;
+                animation: scroll 4s infinite linear;
+            }
+
+            @font-face {
+                font-family: apple2;
+                src: url(apple2.ttf);
+            }
+
+            body {
+                background: conic-gradient(
+                        from 90deg at 2px 2px,
+                        #302c54 90deg,
+                        #b96b72 0
+                    )
+                    0 0/50px 50px;
+                background-position: -3px -3px;
+                width: 100vw;
+                height: 100vh;
+                margin: 0px;
+                padding: 0px;
+                overflow: hidden;
+            }
+
+            popup {
+                position: absolute;
+                background-color: #c9c0c1;
+                display: flex;
+                border-radius: 2px;
+                flex-direction: column;
+                width: 200px;
+                height: 100px;
+                padding: 1px;
+                margin: 10px;
+                filter: drop-shadow(2px 2px 1px #703d7071);
+                font-family: apple2;
+                font-size: 10px;
+                letter-spacing: -1px;
+            }
+
+            window {
+                position: absolute;
+                background-color: #c9c0c1;
+                display: flex;
+                border-radius: 2px;
+                flex-direction: column;
+                width: 400px;
+                height: fit-content;
+                padding: 1px;
+                margin: 10px;
+                filter: drop-shadow(2px 2px 1px #703d7071);
+                font-family: apple2;
+                font-size: 10px;
+                letter-spacing: -1px;
+            }
+
+            titlebar {
+                background-color: #8a7c9d;
+                filter: drop-shadow(2px 2px 1px #683b6f44);
+                border-radius: 2px;
+                height: fit-content;
+                padding: 5px;
+                display: flex;
+                flex-direction: row-reverse;
+            }
+
+            title {
+                text-align: left;
+                margin-left: 0px;
+                margin-right: auto;
+                margin-top: auto;
+                margin-bottom: auto;
+                font-size: large;
+            }
+
+            text {
+                text-align: center;
+                padding: 10px;
+                margin-top: auto;
+                margin-bottom: auto;
+            }
+
+            button {
+                padding-left: 20px;
+                padding-right: 20px;
+                margin: 5px;
+                margin-left: auto;
+                margin-right: auto;
+                font-family: apple2;
+                font-size: 10px;
+                letter-spacing: -1px;
+            }
+
+            .material-symbols-outlined {
+                border: 1px black solid;
+                border-radius: 2px;
+                background-color: #d3cbcc;
+                font-size: large;
+            }
+
+            .close-button {
+                background-color: #f0949d;
+                margin-left: 3px;
+            }
+        </style>
+    </head>
+    <body class="crt"></body>
+    <script>
+        function createStillThere() {
+            const win = document.createElement("popup");
+            const titlebar = document.createElement("titlebar");
+
+            const close = document.createElement("span");
+            close.classList = "material-symbols-outlined close-button";
+            close.textContent = "close";
+
+            const ad = document.createElement("span");
+            ad.classList = "material-symbols-outlined";
+            ad.textContent = "ad";
+
+            const minimize = document.createElement("span");
+            minimize.classList = "material-symbols-outlined";
+            minimize.textContent = "minimize";
+
+            titlebar.appendChild(close);
+            titlebar.appendChild(ad);
+            titlebar.appendChild(minimize);
+
+            const text = document.createElement("text");
+            text.textContent = "you still there?";
+
+            const dismiss = document.createElement("button");
+            dismiss.textContent = "dismiss";
+            dismiss.onclick = () => {
+                const posEvent = new Event("Positioning");
+                posEvent.pageX = Math.random() * window.innerWidth;
+                posEvent.pageY = Math.random() * window.innerHeight;
+                $(win).position({
+                    my: "center top",
+                    of: posEvent,
+                    collision: "fit",
+                });
+            };
+
+            win.appendChild(titlebar);
+            win.appendChild(text);
+            win.appendChild(dismiss);
+
+            $("body").append(win);
+
+            $(win).draggable({ containment: "body" });
+
+            dismiss.onclick();
+        }
+
+        function createImagePane(name, path) {
+            const win = document.createElement("window");
+            const titlebar = document.createElement("titlebar");
+
+            const close = document.createElement("span");
+            close.classList = "material-symbols-outlined close-button";
+            close.textContent = "close";
+
+            const ad = document.createElement("span");
+            ad.classList = "material-symbols-outlined";
+            ad.textContent = "ad";
+
+            const minimize = document.createElement("span");
+            minimize.classList = "material-symbols-outlined";
+            minimize.textContent = "minimize";
+
+            const title = document.createElement("text");
+            title.textContent = name;
+            title.style.padding = "0px";
+            title.style.marginLeft = "0px";
+            title.style.marginRight = "auto";
+
+            titlebar.appendChild(close);
+            titlebar.appendChild(ad);
+            titlebar.appendChild(minimize);
+            titlebar.appendChild(title);
+
+            const img = document.createElement("img");
+            img.src = path;
+
+            win.appendChild(titlebar);
+            win.appendChild(img);
+
+            $("body").append(win);
+
+            $(win).draggable({ containment: "parent" });
+
+            const posEvent = new Event("Positioning");
+            posEvent.pageX = Math.random() * window.innerWidth;
+            posEvent.pageY = Math.random() * (0.5 * window.innerHeight);
+            $(win).position({
+                my: "center top",
+                of: posEvent,
+                collision: "fit",
+            });
+        }
+
+        for (let i = 0; i < 10; i++) {
+            createStillThere();
+        }
+
+        createImagePane("Music Runner", "img/musicrunner.png");
+        createImagePane("Celestial Combat", "img/celestialcombat.png");
+        createImagePane("NIGHT DRIVE", "img/nightdrive.png");
+        createImagePane("Ray Tracer", "img/raytracer.png");
+        createImagePane("Living Worlds", "img/livingworlds.png");
+    </script>
+</html>
