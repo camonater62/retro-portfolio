@@ -23,12 +23,13 @@
         <style>
             @keyframes scroll {
                 0% {
-                    top: -10px;
+                    top: -8px;
                 }
                 100% {
                     top: 0px;
                 }
             }
+
             .crt::after {
                 content: " ";
                 display: block;
@@ -42,6 +43,7 @@
                 z-index: 2;
                 pointer-events: none;
             }
+
             .crt::before {
                 content: " ";
                 display: block;
@@ -60,12 +62,12 @@
                         rgba(0, 255, 0, 0.02),
                         rgba(0, 0, 255, 0.06)
                     );
-                z-index: 2;
+                z-index: 1000000000;
                 background-size:
-                    200% 2px,
+                    200% 8px,
                     3px 200%;
                 pointer-events: none;
-                animation: scroll 4s infinite linear;
+                animation: scroll 1s infinite linear;
             }
 
             @font-face {
@@ -95,7 +97,7 @@
                 border-radius: 2px;
                 flex-direction: column;
                 width: 200px;
-                height: 100px;
+                height: 110px;
                 padding: 1px;
                 margin: 10px;
                 filter: drop-shadow(2px 2px 1px #703d7071);
@@ -142,6 +144,7 @@
             text {
                 text-align: center;
                 padding: 10px;
+                font-size: 15px;
                 margin-top: auto;
                 margin-bottom: auto;
             }
@@ -172,8 +175,19 @@
     </head>
     <body class="crt"></body>
     <script>
-        function createStillThere() {
+        let zIndex = 1;
+
+        document.getElementsByClassName("crt")[0].onmousemove = (event) => {
+            event.preventDefault();
+        };
+
+        function createPopup() {
             const win = document.createElement("popup");
+            win.onmousedown = (event) => {
+                win.style.zIndex = zIndex;
+                zIndex++;
+            };
+
             const titlebar = document.createElement("titlebar");
 
             const close = document.createElement("span");
@@ -221,6 +235,11 @@
 
         function createImagePane(name, path) {
             const win = document.createElement("window");
+            win.onmousedown = (event) => {
+                win.style.zIndex = zIndex;
+                zIndex++;
+            };
+
             const titlebar = document.createElement("titlebar");
 
             const close = document.createElement("span");
@@ -266,8 +285,8 @@
             });
         }
 
-        for (let i = 0; i < 10; i++) {
-            createStillThere();
+        for (let i = 0; i < 5; i++) {
+            createPopup();
         }
 
         createImagePane("Music Runner", "img/musicrunner.png");
